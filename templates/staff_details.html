@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Details</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        main {
+            flex: 1;
+            padding: 20px;
+        }
+        .staff-card {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin: 10px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        .staff-card h2 {
+            margin: 0;
+        }
+        .info {
+            margin: 5px 0;
+        }
+        header {
+            background-color: rgba(57, 127, 146, 0.9);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h2 {
+            color: #fff;
+            font-weight: bold;
+        }
+        header ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+        header ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+        }
+        header ul li a:hover {
+            color: #e6e6e6;
+        }
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #ffffff;
+            background-color: rgba(57, 127, 146, 0.9);
+        }
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        footer a:hover {
+            color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h2>Secure Ledger</h2>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/staff_login">Staff Login</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <h1>Staff Details</h1>
+
+        {% for staff in staff_list %}
+            <div class="staff-card">
+                <h2>{{ staff.name }}</h2>
+                <p><strong>Serial Number:</strong> {{ loop.index }}</p>
+                <p><strong>Branch:</strong> {{ staff.branch }}</p>
+                <p><strong>Phone Number:</strong> {{ staff.phone_number }}</p>
+                <p><strong>Email:</strong> {{ staff.email }}</p>
+                <p><strong>Timestamp:</strong> {{ staff.timestamp }}</p>
+            </div>
+        {% else %}
+            <p>No staff information available.</p>
+        {% endfor %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Secure Ledger - All Rights Reserved | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+
+</body>
+</html>

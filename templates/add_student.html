@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background-color: #fffbec; /* Light warm background */
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: rgba(57, 127, 146, 0.7);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav h2  {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li  {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul i li a:hover {
+            color: #f9f9f9;
+        }
+
+        /* Form container */
+        form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            margin: 150px auto 0;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Title */
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            color: #4a4a8e;
+            font-weight: 600;
+        }
+
+        /* Label styles */
+        label {
+            font-size: 1.1em;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        /* Input fields styling */
+        input[type="text"],
+        input[type="file"],
+        input[type="date"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #66b2ff;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+
+        /* Input focus effect */
+        input[type="text"]:focus,
+        input[type="file"]:focus,
+        input[type="date"]:focus,
+        input[type="email"]:focus,
+        select:focus {
+            border-color: #4a4a8e;
+            box-shadow: 0 0 8px rgba(74, 74, 142, 0.4);
+            outline: none;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            background-color: #66b2ff;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+
+        /* Button styles */
+        button {
+            background: linear-gradient(135deg, #4a4a8e, #00264d);
+            color: #ffffff;
+            padding: 12px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #37375a, #00264d);
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* Link to view students */
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4a4a8e;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s, text-decoration 0.3s;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #00264d;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            color: #ffffff;
+            font-weight: 400;
+            background-color: rgba(57, 127, 146, 0.7);
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            color: #f9f9f9;
+        }
+
+        /* Keyframes for fade-in animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 600px) {
+            form {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            input,
+            select,
+            button {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h2>Secure Ledger</h2>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="{{ url_for('change_password') }}">Change Password</a></li>
+
+            <li><a href="/add_staff">Add Staff</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <form id="addStudentForm" enctype="multipart/form-data">
+        <h1>Add Student to Blockchain</h1>
+
+        <div class="progress-bar">
+            <div class="progress-bar-inner" id="progressBar"></div>
+        </div>
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="usn">USN:</label>
+        <input type="text" id="usn" name="usn" required placeholder="Enter USN">
+         
+         <!-- Email input field -->
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required placeholder="Enter student's email">
+
+        <label for="course">Course:</label>
+        <select id="course" name="course" required>
+            <option value="">Select Course</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="Information Science">Information Science</option>
+            <option value="Mechanical Engineering">Mechanical Engineering</option>
+            <option value="Civil Engineering">Civil Engineering</option>
+            <option value="Electrical Engineering">Electrical Engineering</option>
+        </select>
+
+        <label for="institute">Institute Name:</label>
+        <input type="text" id="institute" name="institute" required placeholder="Enter Institute">
+
+        <label for="college">College Name:</label>
+        <input type="text" id="college" name="college" required placeholder="Enter College Name">
+
+        <label for="gender">Gender:</label>
+        <div>
+            <input type="radio" id="male" name="gender" value="Male" required>
+            <label for="male">Male</label>
+
+            <input type="radio" id="female" name="gender" value="Female" required>
+            <label for="female">Female</label>
+
+            <input type="radio" id="other" name="gender" value="Other" required>
+            <label for="other">Other</label>
+        </div><br>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required min="2001-01-01">
+
+        <label for="skills">Skills (comma separated):</label>
+        <input type="text" id="skills" name="skills" placeholder="e.g., Blockchain, AI, Web Development">
+
+        <label for="profilePicture">Profile Picture:</label>
+        <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+
+        <input type="hidden" id="hashedUSN" name="hashedUSN">
+
+        <button type="submit">Add Student</button>
+
+        <a href="/view_students">View All Students</a>
+    </form>
+
+    <footer>
+        <p>&copy; 2024 Secure Ledger - All Rights Reserved | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.js"></script>
+    <script>
+        // Form progress bar logic
+        document.getElementById('addStudentForm').addEventListener('input', function() {
+            const inputs = Array.from(this.elements).filter(el => el.tagName === 'INPUT' || el.tagName === 'SELECT');
+            const filledInputs = inputs.filter(input => input.value);
+            const progress = (filledInputs.length / inputs.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        });
+
+        // Hashing the USN
+        async function hashUSN(usn) {
+            return CryptoJS.SHA256(usn).toString(CryptoJS.enc.Hex);
+        }
+
+        // Form submission logic
+        document.getElementById('addStudentForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const formData = new FormData(this);
+
+            // Hash the USN and append it to the form data
+            const usn = document.getElementById('usn').value;
+            const hashedUSN = await hashUSN(usn);
+            formData.append('hashedUSN', hashedUSN);
+
+            try {
+                const response = await fetch('/add_student', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert(data.message);
+                    this.reset(); // Reset form fields after successful submission
+                    document.getElementById('progressBar').style.width = '0%'; // Reset progress bar
+                } else {
+                    const errorData = await response.json();
+                    alert('Failed to add student: ' + (errorData.message || 'Please try again.'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

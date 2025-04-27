@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Certificates</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(57, 127, 146, 0.9);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h2 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        header ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        header ul li {
+            display: inline-block;
+        }
+
+        header ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+
+        header ul li a:hover {
+            color: #e6e6e6;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding-top: 100px;
+            margin: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1, h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 1.3em;
+        }
+
+        /* Form Styles */
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="file"] {
+            margin-bottom: 20px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        /* Certificates List */
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        ul li {
+            padding: 5px 0;
+            font-size: 1.1em;
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(57, 127, 146, 0.9);
+            color: white;
+            font-size: 0.9em;
+            margin-top: auto; /* Pushes footer to the bottom */
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            color: #f9f9f9;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            header h2 {
+                font-size: 1.5em;
+            }
+
+            header ul li a {
+                font-size: 0.9em;
+            }
+
+            .form-container {
+                max-width: 90%;
+            }
+        }
+    </style>
+    <script>
+        // Function to show success alert after submission
+        function showSuccessAlert() {
+            alert('Certificate added successfully!');
+        }
+
+        // Function to check if max certificates have been added
+        function checkMaxCertificates() {
+            const currentCount = {{ certificates|length }};
+            if (currentCount >= 10) {
+                alert("You have reached the limit of 10 certificates.");
+                window.location.href = "{{ url_for('student_dashboard') }}";  // Redirect to the dashboard
+                return false;  // Prevent form submission
+            }
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h2>Secure Ledger</h2>
+        <ul>
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/student_logout">Logout</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <h1>Add Certificates for USN: {{ usn }}</h1>
+
+        <div class="form-container">
+            <form action="{{ url_for('add_certificates', usn_hash=usn) }}" method="post" enctype="multipart/form-data" onsubmit="if(checkMaxCertificates()) { showSuccessAlert(); } else { return false; }">
+
+                <label for="certificate_image">Upload Certificate:</label>
+                <input type="file" name="certificate_image" accept="image/*" required>
+                <input type="submit" value="Add Certificate">
+            </form>
+        </div>
+
+        <h3>Current Certificates ({{ certificates|length }}/10):</h3>
+        <ul>
+            {% for cert in certificates %}
+                <li>{{ cert }}</li>
+            {% endfor %}
+        </ul>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Secure Ledger - All Rights Reserved | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background-image: linear-gradient(135deg, #0A2A43, #1E81B0); /* Deep navy to bright cyan */
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: rgba(33, 100, 152, 0.7); /* Muted navy blue */
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav h2 {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #F2A365; /* Warm light orange */
+        }
+
+        /* Main Container */
+        .container {
+            background: rgba(255, 255, 255, 0.85); /* Semi-transparent white */
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 600px;
+            margin: 140px auto; /* Adjust for fixed navbar */
+            box-shadow: 0 8px 24px rgba(0, 0, 128, 0.2); /* Floating effect */
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #003366; /* Dark blue */
+        }
+
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: 500;
+            color: #004c99; /* Medium blue */
+        }
+
+        input[type="text"], input[type="file"], select {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin: 5px 0 20px;
+            border: 1px solid #66b2ff; /* Light blue border */
+            border-radius: 8px;
+            font-size: 1em;
+            background: rgba(255, 255, 255, 0.8); /* Slightly transparent */
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus, input[type="file"]:focus, select:focus {
+            border-color: #003366; /* Dark blue */
+            box-shadow: 0 0 8px rgba(0, 0, 128, 0.3); /* Shadow for focus */
+            outline: none;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #003366; /* Dark blue */
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #00264d; /* Darker blue */
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4a4a8e;
+            text-decoration: none;
+            font-size: 1.1em;
+            transition: color 0.3s, text-decoration 0.3s;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #00264d;
+        }
+
+
+        /* Footer */
+       
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            color: #ffffff;
+            font-weight: 400;
+            background-color: rgba(57, 127, 146, 0.7);
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            color: #f9f9f9;
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <h2>Secure Ledger</h2>
+        <ul>
+            <li><a href="/">Home</a></li>
+            
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Edit Student</h1>
+        <form action="{{ url_for('edit_student', student_id=student.index) }}" method="post" enctype="multipart/form-data">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" value="{{ student.student_data.name }}" required>
+
+            <label for="usn">USN:</label>
+            <input type="text" id="usn" name="usn" value="{{ student.student_data.usn }}" required>
+
+            <label for="course">Course</label>
+            <select id="course" name="course" required>
+                <option value="Computer Science" {% if student.student_data.course == 'Computer Science' %}selected{% endif %}>Computer Science</option>
+                <option value="Information Science" {% if student.student_data.course == 'Information Technology' %}selected{% endif %}>Information Technology</option>
+                <option value="Mechanical Engineering" {% if student.student_data.course == 'Mechanical Engineering' %}selected{% endif %}>Mechanical Engineering</option>
+                <option value="Civil Engineering" {% if student.student_data.course == 'Civil Engineering' %}selected{% endif %}>Civil Engineering</option>
+                <option value="Electrical Engineering" {% if student.student_data.course == 'Electrical Engineering' %}selected{% endif %}>Electrical Engineering</option>
+            </select>
+
+            <label for="institute">Institute</label>
+            <input type="text" id="institute" name="institute" value="{{ student.student_data.institute }}" required>
+
+            <label for="college">College</label>
+            <input type="text" id="college" name="college" value="{{ student.student_data.college }}" required>
+
+            <label>Gender</label>
+            <div>
+                <input type="radio" id="male" name="gender" value="Male" {% if student.student_data.gender == 'Male' %}checked{% endif %} required>
+                <label for="male">Male</label>
+
+                <input type="radio" id="female" name="gender" value="Female" {% if student.student_data.gender == 'Female' %}checked{% endif %} required>
+                <label for="female">Female</label>
+
+                <input type="radio" id="other" name="gender" value="Other" {% if student.student_data.gender == 'Other' %}checked{% endif %} required>
+                <label for="other">Other</label>
+            </div>
+
+            <label for="dob">Date of Birth</label>
+            <input type="text" id="dob" name="dob" value="{{ student.student_data.dob }}" required>
+
+            <label for="skills">Skills (comma-separated)</label>
+            <input type="text" id="skills" name="skills" value="{{ student.student_data.skills | join(', ') }}" required>
+
+            <label for="profile_picture">Profile Picture</label>
+            <input type="file" id="profile_picture" name="profile_picture">
+
+            
+            <button type="submit">Update Student</button>
+        </form>
+        <a href="{{ url_for('view_students') }}">Back to View Students</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Secure Ledger - All Rights Reserved | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+</body>
+</html>

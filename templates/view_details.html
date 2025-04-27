@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <style>
+        body {
+            background-color: #f4f7fa;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: rgba(57, 127, 146, 0.9);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        header h2 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        header ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        header ul li {
+            display: inline;
+        }
+
+        header ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1em;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        header ul li a:hover {
+            color: #e6e6e6;
+        }
+
+        .details-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 80px auto 20px;
+            text-align: left;
+            border: 1px solid #e0e0e0;
+        }
+
+        .details-container h2 {
+            text-align: center;
+            color: #4a4a4a;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .detail-item {
+            margin-bottom: 15px;
+            padding: 5px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+        }
+
+        .detail-item span {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+            color: #ffffff;
+            background-color: rgba(57, 127, 146, 0.9);
+            font-size: 0.9em;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            color: #f9f9f9;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h2>Secure Ledger</h2>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/student_logout">Logout</a></li>
+        </ul>
+    </header>
+    <div class="details-container">
+        <h2>My Details</h2>
+        <div class="detail-item">
+            <span>USN:</span> {{ student_details['usn'] }}
+        </div>
+        <div class="detail-item">
+            <span>Name:</span> {{ student_details['name'] }}
+        </div>
+        <div class="detail-item">
+            <span>Email:</span> {{ student_details['email'] }}
+        </div>
+        <div class="detail-item">
+            <span>Course:</span> {{ student_details['course'] }}
+        </div>
+        <div class="detail-item">
+            <span>Institute:</span> {{ student_details['institute'] }}
+        </div>
+        <div class="detail-item">
+            <span>College:</span> {{ student_details['college'] }}
+        </div>
+        <div class="detail-item">
+            <span>Gender:</span> {{ student_details['gender'] }}
+        </div>
+        <div class="detail-item">
+            <span>Date of Birth:</span> {{ student_details['dob'] }}
+        </div>
+        <div class="detail-item">
+            <span>Skills:</span> {{ student_details['skills'] }}
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Secure Ledger - All Rights Reserved | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+</body>
+
+</html>

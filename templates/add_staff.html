@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Staff</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background-color: #fffbec;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: rgba(57, 127, 146, 0.7);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav h2 {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #f9f9f9;
+        }
+
+        /* Form container */
+        form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 600px;
+            margin: 150px auto;
+            display: flex;
+            flex-direction: column;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2.2em;
+            color: #4a4a8e;
+            font-weight: 600;
+        }
+
+        label {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        button {
+            padding: 12px;
+            margin-bottom: 15px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            border-color: #4a4a8e;
+        }
+
+        button {
+            background: linear-gradient(135deg, #4a4a8e, #00264d);
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: linear-gradient(135deg, #37375a, #00264d);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(57, 127, 146, 0.7);
+            color: #ffffff;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <h2>Secure Ledger</h2>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/staff_details">Staff Details</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Staff Form -->
+    <form id="staffForm">
+        <h1>Add Staff</h1>
+
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter staff's name" required>
+
+        <label for="phone_number">Phone Number</label>
+        <input type="text" id="phone_number" name="phone_number" placeholder="Enter phone number" required>
+
+        <label for="branch">Branch</label>
+        <input type="text" id="branch" name="branch" placeholder="Enter branch" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter email address" required>
+
+        <button type="submit">Add Staff</button>
+    </form>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Secure Ledger - All Rights Reserved | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#staffForm').on('submit', function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "{{ url_for('add_staff') }}",
+                    method: "POST",
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        alert(response.message);  // Show an alert message
+                        window.location.href = "{{ url_for('add_staff') }}";  // Redirect to Add Student page
+                    },
+                    error: function(xhr) {
+                        alert(xhr.responseJSON.message);  // Handle errors
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

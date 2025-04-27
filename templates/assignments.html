@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Assignments</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background-color: #F0FFFF;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Navigation Bar */
+        nav {
+            background-color: #0095B6;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav h2 {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+
+        nav ul li {
+            display: inline;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            background: none; /* Remove button-like background */
+            padding: 0;       /* Remove padding */
+            border: none;     /* Remove border styling */
+            border-radius: 0; /* Remove rounded edges */
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline; /* Add a simple underline effect on hover */
+            color: #f9f9f9;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 80px 20px 20px;
+        }
+
+        .assignment-card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+        }
+
+        .assignment-card h3 {
+            margin-top: 0;
+            color: #397f92;
+        }
+
+        .assignment-detail {
+            margin: 5px 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+            background-color: #397f92;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+
+        a:hover {
+            background-color: #2f6877;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #0095B6;
+            color: #ffffff;
+        }
+
+        footer a {
+            color: #ffffff;
+            text-decoration: none;
+            background: none; /* Remove button-like background */
+            padding: 0;       /* Remove padding */
+            border: none;     /* Remove border styling */
+            border-radius: 0; /* Remove rounded edges */
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <h2>Secure Ledger</h2>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/staff_dashboard">Dashboard</a></li>
+            <li><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% if assignments %}
+            {% for assignment in assignments %}
+                <div class="assignment-card">
+                    <h3>Assignment {{ assignment.index }}</h3>
+                    <p><strong>Batch:</strong> {{ assignment.batch }}</p>
+                    <p><strong>Subject:</strong> {{ assignment.subject }}</p>
+                    <p><strong>Work:</strong> {{ assignment.work }}</p>
+                    <p><strong>Due Date:</strong> {{ assignment.due_date }}</p>
+                    <p><strong>Assigned By:</strong> {{ assignment.assigned_by }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No assignments found.</p>
+        {% endif %}
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Secure Ledger - All Rights Reserved | <a href="/privacy">Privacy Policy</a></p>
+    </footer>
+
+</body>
+</html> 

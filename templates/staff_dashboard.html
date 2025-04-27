@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            padding: 0;
+            margin: 0;
+        }
+        footer {
+            background-color: rgba(57, 127, 146, 0.7);
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #f9f9f9;
+        }
+
+        header {
+            background-color: rgba(57, 127, 146, 0.9);
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h2 {
+            color: #fff;
+            font-weight: bold;
+        }
+
+        header ul {
+            list-style: none;
+            display: flex;
+            gap: 15px;
+        }
+
+        header ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+        }
+
+        header ul li a:hover {
+            color: #e6e6e6;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .flash {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .flash.danger {
+            background-color: #ffeb3d;
+            color: #000;
+        }
+
+        .flash.success {
+            background-color: #8bc34a;
+            color: #fff;
+        }
+
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            font-weight: bold;
+            padding: 15px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn:active {
+            background-color: #00408d;
+        }
+
+        /* Add Assignment Form */
+        .add-assignment {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="date"],
+        .form-group textarea {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group textarea:focus,
+        .form-group input[type="date"]:focus {
+            border-color: #66afe9;
+            outline: none;
+            box-shadow: 0 0 5px rgba(102, 175, 233, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h2>Secure Ledger</h2>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="{{ url_for('assignments') }}">Assignments</a></li>
+
+            <li><a href="/staff_login">Staff Login</a></li>
+        </ul>
+    </header>
+
+    <!-- Main content -->
+    <main>
+
+        <h1>Welcome, {{ session.get('name') }}</h1>
+
+        <!-- Flash messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Add Assignment Form -->
+        <section class="add-assignment">
+            <h2>Add Assignment</h2>
+
+            <form action="{{ url_for('staff_dashboard') }}" method="POST" class="assignment-form">
+                <div class="form-group">
+                    <label for="branch">Batch</label>
+                    <input type="text" id="branch" name="branch" placeholder="Enter Batch" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" placeholder="Enter Subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="work">Work Details</label>
+                    <textarea id="work" name="work" placeholder="Enter Work Details" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="due_date">Due Date</label>
+                    <input type="date" id="due_date" name="due_date" required 
+                           value="{{ current_date }}" min="{{ current_date }}">
+                </div>
+                
+
+                <button type="submit" class="btn">Add Assignment</button>
+            </form>
+        </section>
+
+        <!-- Existing Assignments Section -->
+        <section class="existing-assignments">
+            <h2>Existing Assignments</h2>
+
+            {% if assignment_blockchain.chain %}
+                {% for block in assignment_blockchain.chain %}
+                    {% if block.staff_data %}
+                        <div class="assignment-card">
+                            <p><strong>Batch:</strong> {{ block.staff_data.branch }}</p>
+                            <p><strong>Subject:</strong> {{ block.staff_data.subject }}</p>
+                            <p><strong>Due Date:</strong> {{ block.staff_data.due_date }}</p>
+                            <p><strong>Assigned Work:</strong> {{ block.staff_data.work }}</p>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>No assignments found.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Secure Ledger © 2024. All rights reserved. | <a href="/">Home</a></p>
+    </footer>
+
+</body>
+</html>

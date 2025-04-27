@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Page - Choose Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f7f9fc;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 40px;
+            font-size: 2.5em;
+            color: #4a4a8e;
+        }
+
+        .icon-container {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            max-width: 700px;
+            gap: 20px;
+        }
+
+        .icon {
+            text-align: center;
+            background-color: #fff;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 150px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .icon:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .icon img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
+
+        .icon p {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: rgba(57, 127, 146, 0.9);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        header h2 {
+            color: #ffffff;
+            margin: 0;
+            font-size: 1.8em;
+            font-weight: 700;
+        }
+
+        header ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        header ul li {
+            display: inline-block;
+        }
+
+        header ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1em;
+            transition: color 0.3s ease;
+        }
+
+        header ul li a:hover {
+            color: #e6e6e6;
+        }
+
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(57, 127, 146, 0.7);
+            color: #fff;
+            font-weight: 400;
+        }
+
+        footer a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        footer a:hover {
+            color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h2>Secure Ledger</h2>
+        <ul>
+            <li><a href="/contact">Contact</a></li>
+            <li><a href="/information">Information</a></li>
+        </ul>
+    </header>
+
+    <div class="container" style="margin-top: 80px;"> <!-- Adjusted margin-top to make room for fixed header -->
+        <h1>Welcome! Choose Your Interface</h1>
+        <div class="icon-container">
+            <!-- Administrator Icon -->
+            <div class="icon" onclick="window.location.href='/login'">
+                <img src="https://img.icons8.com/ios-filled/100/4a4a8e/admin-settings-male.png" alt="Administrator Icon">
+                <p>Administrator</p>
+            </div>
+
+            <!-- Student Icon -->
+            <div class="icon" onclick="window.location.href='/student_login'">
+                <img src="https://img.icons8.com/ios-filled/100/4a4a8e/student-male.png" alt="Student Icon">
+                <p>Student</p>
+            </div>
+
+            <!-- Profile Icon -->
+            <div class="icon" onclick="window.location.href='/profile'">
+                <img src="https://img.icons8.com/ios-filled/100/4a4a8e/user.png" alt="Profile Icon">
+                <p>Profile</p>
+            </div>
+             <!-- Staff Icon -->
+             <div class="icon" onclick="window.location.href='/staff_login'">
+                <img src="https://img.icons8.com/ios-filled/100/4a4a8e/teacher.png" alt="Staff Icon">
+                <p>Staff</p>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Secure Ledger © 2024. All rights reserved. | <a href="/">Home</a></p>
+    </footer>
+
+</body>
+</html>
